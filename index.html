@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090a0d">
+<title>PachiLog | パチンコ収支管理</title>
+<style>
+:root{--bg:#090a0d;--panel:#13151b;--panel2:#191c24;--line:#292d38;--text:#f4f5f7;--muted:#9ba2b1;--red:#ff334f;--red2:#a90e2b;--green:#47e0a0;--blue:#6da8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#211018 0,#090a0d 42%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;padding:0 0 calc(90px + env(safe-area-inset-bottom));font-size:14px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:18px 15px}.top{display:flex;align-items:center;justify-content:space-between;margin:6px 0 20px}.brand{font-weight:900;font-size:25px;letter-spacing:1px}.brand span{color:var(--red);text-shadow:0 0 18px #ff334f66}.tag{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:3px}.iconbtn{border:1px solid var(--line);background:var(--panel);color:white;border-radius:12px;padding:10px 12px}
+.hero{background:linear-gradient(135deg,#251018,#14151c 72%);border:1px solid #552231;border-radius:22px;padding:20px;box-shadow:0 10px 32px #0005;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;border:1px solid #ff334f18;right:-65px;top:-75px;box-shadow:0 0 0 20px #ff334f08,0 0 0 40px #ff334f05}.eyebrow{font-size:11px;letter-spacing:1.5px;color:#e7a2ad;font-weight:700}.profit{font-size:37px;font-weight:900;letter-spacing:-1px;margin:8px 0 18px;line-height:1.2;overflow-wrap:anywhere}.positive{color:var(--red)}.negative{color:var(--blue)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:#ffffff08;border:1px solid #ffffff12;border-radius:13px;padding:11px 9px}.stat small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.stat strong{font-size:15px;overflow-wrap:anywhere}.section{margin-top:23px}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.sectionhead h2{font-size:16px;margin:0}.muted{color:var(--muted)}.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:800;background:var(--red);color:white;box-shadow:0 5px 18px #ff334f2b}.btn.secondary{background:var(--panel2);border:1px solid var(--line);box-shadow:none}.btn.full{width:100%}.quickgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick{border:1px solid var(--line);background:linear-gradient(145deg,#171920,#101116);border-radius:16px;padding:16px;text-align:left;color:white;min-height:86px}.quick .qicon{font-size:20px;margin-bottom:9px}.quick strong{display:block;font-size:14px}.quick small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}.chartwrap{height:205px;position:relative}.chartwrap canvas{width:100%;height:100%;display:block}.list{display:grid;gap:9px}.record{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}.recordtop{display:flex;justify-content:space-between;gap:10px}.recordname{font-weight:800;font-size:14px}.recordsub{color:var(--muted);font-size:11px;margin-top:5px}.recordbottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:11px;padding-top:10px;gap:8px}.recordmoney{font-size:17px;font-weight:900}.mini-actions{display:flex;gap:6px}.mini-actions button{font-size:11px;padding:7px 9px;border:1px solid var(--line);background:var(--panel2);color:white;border-radius:8px}.empty{text-align:center;padding:28px 15px;color:var(--muted);line-height:1.8}.tabs{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#0c0d12ed;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom))}.tabrow{display:grid;grid-template-columns:repeat(4,1fr);width:min(760px,100%);gap:4px}.tab{background:none;border:0;color:var(--muted);padding:7px 3px;border-radius:11px;font-size:10px}.tab .ti{font-size:19px;display:block;margin-bottom:4px}.tab.active{color:white;background:#ff334f1b}.tab.active .ti{filter:drop-shadow(0 0 5px #ff334f)}.page{display:none}.page.active{display:block}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.wide{grid-column:1/-1}.field label{font-size:12px;color:#c4c8d1;font-weight:700}.field input,.field select,.field textarea{width:100%;background:#0b0c10;border:1px solid #343946;color:white;border-radius:10px;padding:12px;min-width:0;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red)}.field textarea{resize:vertical;min-height:70px}.formbox{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px}.calcbox{background:#0d0e13;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-top:13px}.calcbox strong{font-size:20px}.filterrow{display:flex;gap:8px;margin-bottom:12px}.filterrow input,.filterrow select{min-width:0;flex:1;background:#0b0c10;border:1px solid var(--line);color:white;border-radius:10px;padding:10px}.barrow{margin:14px 0}.barlabel{display:flex;justify-content:space-between;gap:10px;margin-bottom:7px;font-size:12px}.bartrack{height:8px;border-radius:20px;background:#292d38;overflow:hidden}.barfill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--red2),var(--red))}.summarygrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.summarytile{padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.summarytile small{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}.summarytile strong{font-size:19px}.notice{font-size:11px;line-height:1.7;color:var(--muted);margin-top:14px}.settingsgroup{display:grid;gap:10px}.hidden{display:none!important}.toast{position:fixed;z-index:10;bottom:100px;left:50%;transform:translateX(-50%);background:#f4f5f7;color:#111;padding:11px 17px;border-radius:20px;font-weight:800;box-shadow:0 8px 24px #0008;white-space:nowrap}
+@media(min-width:600px){.app{padding:24px}.quickgrid{grid-template-columns:repeat(4,1fr)}.formbox{padding:20px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div><div class="brand">PACHI<span>LOG</span></div><div class="tag">PACHINKO SESSION TRACKER</div></div><button class="iconbtn" id="backupTop" aria-label="バックアップ">⇧ 保存</button></header>
+
+<section class="page active" id="page-home">
+<div class="hero"><div class="eyebrow" id="homeMonth">MONTHLY RESULT</div><div class="profit" id="homeProfit">¥0</div><div class="stats"><div class="stat"><small>投資合計</small><strong id="homeInvest">¥0</strong></div><div class="stat"><small>回収合計</small><strong id="homeReturn">¥0</strong></div><div class="stat"><small>実戦回数</small><strong id="homeSessions">0回</strong></div></div></div>
+<div class="section"><div class="sectionhead"><h2>QUICK MENU</h2><span class="muted">クイックメニュー</span></div><div class="quickgrid">
+<button class="quick" data-goto="entry"><div class="qicon">＋</div><strong>実戦を記録</strong><small>投資・回収を入力</small></button>
+<button class="quick" data-goto="history"><div class="qicon">▤</div><strong>実戦履歴</strong><small>過去の記録を確認</small></button>
+<button class="quick" data-goto="analysis"><div class="qicon">▥</div><strong>収支を分析</strong><small>機種・店舗・月別</small></button>
+<button class="quick" data-goto="settings"><div class="qicon">⚙</div><strong>設定・保存</strong><small>予算とバックアップ</small></button>
+</div></div>
+<div class="section"><div class="sectionhead"><h2>月間収支推移</h2><span class="muted" id="chartMonth"></span></div><div class="card"><div class="chartwrap"><canvas id="homeChart"></canvas></div></div></div>
+<div class="section"><div class="sectionhead"><h2>最近の実戦</h2><button class="iconbtn" data-goto="history">すべて見る →</button></div><div id="recentList" class="list"></div></div>
+<div class="notice">※ このアプリは遊技記録用です。過去の成績は将来の結果を保証しません。</div>
+</section>
+
+<section class="page" id="page-entry">
+<div class="sectionhead"><h2 id="formTitle">実戦を記録</h2><button class="iconbtn" id="cancelEdit">キャンセル</button></div>
+<form id="recordForm" class="formbox">
+<input type="hidden" id="recordId">
+<div class="formgrid">
+<div class="field"><label for="date">遊技日 *</label><input type="date" id="date" required></div>
+<div class="field"><label for="category">遊技区分</label><select id="category"><option>甘デジ</option><option>ライトミドル</option><option>ミドル</option><option>ラッキートリガー</option><option>その他</option></select></div>
+<div class="field wide"><label for="store">店舗名 *</label><input id="store" list="storeOptions" placeholder="例：町田のともえ" required maxlength="60"><datalist id="storeOptions"></datalist></div>
+<div class="field wide"><label for="machine">機種名 *</label><input id="machine" list="machineOptions" placeholder="例：わんわんパラダイス" required maxlength="100"><datalist id="machineOptions"></datalist></div>
+<div class="field"><label for="invest">投資金額（円）*</label><input id="invest" type="number" inputmode="numeric" min="0" step="100" placeholder="5000" required></div>
+<div class="field"><label for="returned">回収金額（円）*</label><input id="returned" type="number" inputmode="numeric" min="0" step="100" placeholder="8000" required></div>
+<div class="field"><label for="spins">回転数</label><input id="spins" type="number" inputmode="numeric" min="0" step="1" placeholder="250"></div>
+<div class="field"><label for="hits">大当たり回数</label><input id="hits" type="number" inputmode="numeric" min="0" step="1" placeholder="12"></div>
+<div class="field wide"><label for="memo">メモ（任意）</label><textarea id="memo" placeholder="気づいたこと、遊タイムなど"></textarea></div>
+</div>
+<div class="calcbox"><span class="muted">今回の収支（自動計算）</span><strong id="liveProfit">¥0</strong></div>
+<button class="btn full" style="margin-top:14px" type="submit" id="saveRecord">記録を保存する</button>
+</form>
+<p class="notice">投資額と回収額は、実際に使った現金・受け取った換金額で入力してください。持ち玉や貯玉の残高は管理しません。</p>
+</section>
+
+<section class="page" id="page-history">
+<div class="sectionhead"><h2>実戦履歴</h2><button class="btn" data-goto="entry">＋ 記録</button></div>
+<div class="filterrow"><input id="historySearch" placeholder="機種・店舗で検索"><select id="historyMonth"><option value="all">すべての月</option></select></div>
+<div id="historyTotals" class="muted" style="margin-bottom:12px"></div><div id="historyList" class="list"></div>
+</section>
+
+<section class="page" id="page-analysis">
+<div class="sectionhead"><h2>収支分析</h2><span class="muted">ALL TIME</span></div>
+<div class="summarygrid" id="analysisTiles"></div>
+<div class="section"><div class="sectionhead"><h2>月別収支</h2></div><div class="card"><div class="chartwrap"><canvas id="analysisChart"></canvas></div></div></div>
+<div class="section"><div class="sectionhead"><h2>機種別収支</h2></div><div class="card" id="machineStats"></div></div>
+<div class="section"><div class="sectionhead"><h2>店舗別収支</h2></div><div class="card" id="storeStats"></div></div>
+</section>
+
+<section class="page" id="page-settings">
+<div class="sectionhead"><h2>設定・データ管理</h2></div>
+<div class="formbox"><div class="field"><label for="budget">月間予算（投資上限・円）</label><input id="budget" type="number" min="0" step="1000" inputmode="numeric" placeholder="例：30000"></div><div class="field" style="margin-top:12px"><label for="goal">月間収支目標（円）</label><input id="goal" type="number" step="1000" inputmode="numeric" placeholder="例：10000"></div><button class="btn full" style="margin-top:14px" id="saveSettings">設定を保存</button></div>
+<div class="section"><div class="sectionhead"><h2>バックアップ</h2></div><div class="settingsgroup"><button class="btn secondary full" id="exportData">⇧ バックアップを書き出す（JSON）</button><label class="btn secondary full" for="importFile" style="text-align:center">⇩ バックアップを復元する</label><input class="hidden" type="file" id="importFile" accept=".json,application/json"><button class="btn secondary full" id="exportCsv">▤ 履歴をCSVで書き出す</button></div><p class="notice">記録はこのブラウザ内に保存されます。ブラウザのデータ削除や端末の故障で消える可能性があるため、定期的にバックアップを保存してください。別の端末・ブラウザには自動同期されません。</p></div>
+<div class="section"><div class="sectionhead"><h2>データ</h2></div><div class="card"><div class="muted" id="dataCount"></div><button class="btn secondary full" style="margin-top:12px" id="clearData">すべての記録を削除</button></div></div>
+</section>
+</div>
+<nav class="tabs"><div class="tabrow">
+<button class="tab active" data-tab="home"><span class="ti">⌂</span>ホーム</button>
+<button class="tab" data-tab="entry"><span class="ti">＋</span>記録する</button>
+<button class="tab" data-tab="history"><span class="ti">▤</span>履歴</button>
+<button class="tab" data-tab="analysis"><span class="ti">▥</span>分析</button>
+</div></nav>
+<div id="toast" class="toast hidden"></div>
+<script>
+(()=> {
+'use strict';
+const KEY='pachilog_records_v1', SETTINGS='pachilog_settings_v1';
+let records=[], settings={budget:0,goal:0}, currentPage='home', toastTimer;
+const $=id=>document.getElementById(id);
+const yen=n=>(n<0?'-':'')+'¥'+Math.abs(Math.round(Number(n)||0)).toLocaleString('ja-JP');
+const signed=n=>(n>0?'+':n<0?'-':'')+'¥'+Math.abs(Math.round(n||0)).toLocaleString('ja-JP');
+const net=r=>(Number(r.returned)||0)-(Number(r.invest)||0);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateNow=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const monthKey=d=>String(d||'').slice(0,7);
+const monthLabel=m=>{const [y,mo]=m.split('-');return `${y}年${Number(mo)}月`};
+function load(){try{records=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(records))records=[]}catch{records=[]}try{settings={...settings,...JSON.parse(localStorage.getItem(SETTINGS)||'{}')}}catch{}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(records));}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),2200)}
+function moneyClass(n){return n>0?'positive':n<0?'negative':''}
+function setPage(page){currentPage=page;document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===page));if(page==='home'||page==='history'||page==='analysis'||page==='settings')renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+function totals(list){return list.reduce((a,r)=>{a.invest+=Number(r.invest)||0;a.returned+=Number(r.returned)||0;a.net+=net(r);a.count++;if(net(r)>0)a.wins++;return a},{invest:0,returned:0,net:0,count:0,wins:0})}
+function recordCard(r){const n=net(r);return `<article class="record"><div class="recordtop"><div><div class="recordname">${esc(r.machine||'機種未設定')}</div><div class="recordsub">${esc(r.date||'日付不明')} ・ ${esc(r.store||'店舗未設定')} ・ ${esc(r.category||'その他')}</div></div><div class="recordmoney ${moneyClass(n)}">${signed(n)}</div></div><div class="recordbottom"><div class="muted" style="font-size:11px">投資 ${yen(r.invest)}　回収 ${yen(r.returned)}${r.spins!==''&&r.spins!=null?'　'+esc(r.spins)+'回転':''}</div><div class="mini-actions"><button data-edit="${esc(r.id)}">編集</button><button data-delete="${esc(r.id)}">削除</button></div></div>${r.memo?`<div class="recordsub">${esc(r.memo)}</div>`:''}</article>`}
+function renderRecent(){const arr=[...records].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||0)-(a.created||0)).slice(0,3);$('recentList').innerHTML=arr.length?arr.map(recordCard).join(''):'<div class="empty">まだ実戦記録がないよ。<br>「実戦を記録」から最初の記録を追加しよう！</div>'}
+function renderHome(){const now=dateNow(),m=monthKey(now),list=records.filter(r=>monthKey(r.date)===m),t=totals(list);$('homeMonth').textContent=monthLabel(m)+' RESULT';$('homeProfit').textContent=signed(t.net);$('homeProfit').className='profit '+moneyClass(t.net);$('homeInvest').textContent=yen(t.invest);$('homeReturn').textContent=yen(t.returned);$('homeSessions').textContent=t.count+'回';$('chartMonth').textContent=monthLabel(m);drawChart($('homeChart'),dailySeries(m));renderRecent()}
+function drawChart(canvas,items){if(!canvas)return;const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;const dpr=window.devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;const c=canvas.getContext('2d');c.scale(dpr,dpr);const w=rect.width,h=rect.height,p={l:36,r:8,t:12,b:25},cw=w-p.l-p.r,ch=h-p.t-p.b;c.clearRect(0,0,w,h);const vals=items.map(x=>x.value);let max=Math.max(1000,...vals.map(Math.abs));max=Math.ceil(max/1000)*1000;const zero=p.t+ch/2;c.strokeStyle='#2b2e38';c.lineWidth=1;c.beginPath();c.moveTo(p.l,zero);c.lineTo(w-p.r,zero);c.stroke();for(let j=0;j<3;j++){let y=p.t+j*ch/2;c.strokeStyle='#20232c';c.beginPath();c.moveTo(p.l,y);c.lineTo(w-p.r,y);c.stroke()}c.font='10px sans-serif';c.fillStyle='#9299a8';c.textAlign='right';c.fillText(yen(max),p.l-5,p.t+4);c.fillText('¥0',p.l-5,zero+4);c.fillText('-'+yen(max).slice(1),p.l-5,h-p.b+2);if(!items.length){c.textAlign='center';c.fillText('記録するとグラフが表示されます',w/2,h/2);return}const step=cw/items.length,bw=Math.max(2,step*.58);items.forEach((it,i)=>{const x=p.l+i*step+(step-bw)/2,barh=Math.abs(it.value)/max*(ch/2-3),y=it.value>=0?zero-barh:zero;c.fillStyle=it.value>=0?'#ff334f':'#6da8ff';c.beginPath();if(c.roundRect)c.roundRect(x,y,bw,Math.max(1,barh),3);else c.rect(x,y,bw,Math.max(1,barh));c.fill()});c.fillStyle='#9299a8';c.textAlign='center';if(items.length<=12){items.forEach((it,i)=>{if(i%Math.ceil(items.length/6)===0)c.fillText(it.label,p.l+i*step+step/2,h-6)})}else{[0,Math.floor(items.length/3),Math.floor(items.length*2/3),items.length-1].forEach(i=>c.fillText(items[i].label,p.l+i*step+step/2,h-6))}}
+function dailySeries(m){const [y,mo]=m.split('-').map(Number),days=new Date(y,mo,0).getDate();let running=0;return Array.from({length:days},(_,i)=>{const d=`${m}-${String(i+1).padStart(2,'0')}`;running+=records.filter(r=>r.date===d).reduce((s,r)=>s+net(r),0);return {label:String(i+1),value:running}})}
+function monthlySeries(){const keys=[...new Set(records.map(r=>monthKey(r.date)).filter(Boolean))].sort().slice(-12);return keys.map(m=>({label:m.slice(2),value:totals(records.filter(r=>monthKey(r.date)===m)).net}))}
+function renderHistory(){const search=$('historySearch').value.toLowerCase().trim(),m=$('historyMonth').value;let arr=[...records].filter(r=>(m==='all'||monthKey(r.date)===m)&&(!search||(`${r.machine} ${r.store} ${r.memo}`).toLowerCase().includes(search))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.created||0)-(a.created||0));const t=totals(arr);$('historyTotals').textContent=`${arr.length}件 ・ 投資 ${yen(t.invest)} ・ 回収 ${yen(t.returned)} ・ 収支 ${signed(t.net)}`;$('historyList').innerHTML=arr.length?arr.map(recordCard).join(''):'<div class="empty">条件に合う記録がありません。</div>';const months=[...new Set(records.map(r=>monthKey(r.date)).filter(Boolean))].sort().reverse();const sel=$('historyMonth'),old=sel.value;sel.innerHTML='<option value="all">すべての月</option>'+months.map(x=>`<option value="${x}">${monthLabel(x)}</option>`).join('');if(months.includes(old))sel.value=old}
+function renderBars(id,field){const groups={};records.forEach(r=>{const name=(r[field]||'未設定').trim()||'未設定';groups[name]=(groups[name]||0)+net(r)});const arr=Object.entries(groups).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,10);if(!arr.length)return '<div class="empty">記録が増えるとランキングが表示されます。</div>';const max=Math.max(1,...arr.map(x=>Math.abs(x[1])));return arr.map(([name,v])=>`<div class="barrow"><div class="barlabel"><span>${esc(name)}</span><strong class="${moneyClass(v)}">${signed(v)}</strong></div><div class="bartrack"><div class="barfill" style="width:${Math.max(2,Math.abs(v)/max*100)}%;${v<0?'background:linear-gradient(90deg,#315fae,#6da8ff)':''}"></div></div></div>`).join('')}
+function renderAnalysis(){const t=totals(records),rate=t.count?Math.round(t.wins/t.count*100):0,avg=t.count?Math.round(t.net/t.count):0;$('analysisTiles').innerHTML=`<div class="summarytile"><small>累計収支</small><strong class="${moneyClass(t.net)}">${signed(t.net)}</strong></div><div class="summarytile"><small>累計投資</small><strong>${yen(t.invest)}</strong></div><div class="summarytile"><small>累計回収</small><strong>${yen(t.returned)}</strong></div><div class="summarytile"><small>勝率（プラス収支）</small><strong>${rate}%</strong></div><div class="summarytile"><small>実戦回数</small><strong>${t.count}回</strong></div><div class="summarytile"><small>1回あたり平均収支</small><strong class="${moneyClass(avg)}">${signed(avg)}</strong></div>`;drawChart($('analysisChart'),monthlySeries());$('machineStats').innerHTML=renderBars('machine','machine');$('storeStats').innerHTML=renderBars('store','store')}
+function renderSettings(){$('budget').value=settings.budget||'';$('goal').value=settings.goal||'';$('dataCount').textContent=`保存中の記録：${records.length}件`;}
+function updateDatalists(){const stores=[...new Set(records.map(r=>r.store).filter(Boolean))].sort(),machines=[...new Set(records.map(r=>r.machine).filter(Boolean))].sort();$('storeOptions').innerHTML=stores.map(x=>`<option value="${esc(x)}">`).join('');$('machineOptions').innerHTML=machines.map(x=>`<option value="${esc(x)}">`).join('')}
+function renderAll(){renderHome();renderHistory();renderAnalysis();renderSettings();updateDatalists()}
+function resetForm(){ $('recordForm').reset();$('recordId').value='';$('date').value=dateNow();$('formTitle').textContent='実戦を記録';$('saveRecord').textContent='記録を保存する';$('cancelEdit').classList.add('hidden');updateLiveProfit()}
+function updateLiveProfit(){const n=(Number($('returned').value)||0)-(Number($('invest').value)||0);$('liveProfit').textContent=signed(n);$('liveProfit').className=moneyClass(n)}
+function editRecord(id){const r=records.find(x=>x.id===id);if(!r)return;setPage('entry');$('recordId').value=r.id;$('date').value=r.date||dateNow();$('category').value=r.category||'甘デジ';$('store').value=r.store||'';$('machine').value=r.machine||'';$('invest').value=r.invest??0;$('returned').value=r.returned??0;$('spins').value=r.spins??'';$('hits').value=r.hits??'';$('memo').value=r.memo||'';$('formTitle').textContent='実戦記録を編集';$('saveRecord').textContent='変更を保存する';$('cancelEdit').classList.remove('hidden');updateLiveProfit()}
+function deleteRecord(id){const r=records.find(x=>x.id===id);if(!r)return;if(!confirm(`${r.date||''} ${r.machine||'記録'} を削除する？この操作は取り消せません。`))return;records=records.filter(x=>x.id!==id);persist();renderAll();toast('記録を削除しました')}
+function download(name,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function exportJSON(){download(`pachilog-backup-${dateNow()}.json`,JSON.stringify({app:'PachiLog',version:1,exportedAt:new Date().toISOString(),records,settings},null,2),'application/json');toast('バックアップを書き出しました')}
+function exportCSV(){const rows=[['日付','店舗','機種','遊技区分','投資円','回収円','収支円','回転数','大当たり回数','メモ'],...records.map(r=>[r.date,r.store,r.machine,r.category,r.invest,r.returned,net(r),r.spins,r.hits,r.memo])];const csv='\uFEFF'+rows.map(row=>row.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');download(`pachilog-history-${dateNow()}.csv`,csv,'text/csv;charset=utf-8');toast('CSVを書き出しました')}
+document.addEventListener('click',e=>{const tab=e.target.closest('[data-tab]');if(tab)setPage(tab.dataset.tab);const go=e.target.closest('[data-goto]');if(go){if(go.dataset.goto==='entry')resetForm();setPage(go.dataset.goto)}const edit=e.target.closest('[data-edit]');if(edit)editRecord(edit.dataset.edit);const del=e.target.closest('[data-delete]');if(del)deleteRecord(del.dataset.delete)});
+$('recordForm').addEventListener('input',e=>{if(e.target.id==='invest'||e.target.id==='returned')updateLiveProfit()});
+$('recordForm').addEventListener('submit',e=>{e.preventDefault();const id=$('recordId').value;const r={id:id||`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,date:$('date').value,category:$('category').value,store:$('store').value.trim(),machine:$('machine').value.trim(),invest:Number($('invest').value)||0,returned:Number($('returned').value)||0,spins:$('spins').value===''?'':Number($('spins').value),hits:$('hits').value===''?'':Number($('hits').value),memo:$('memo').value.trim(),created:Date.now()};if(id){const i=records.findIndex(x=>x.id===id);if(i>=0){r.created=records[i].created||Date.now();records[i]=r}}else records.push(r);persist();resetForm();renderAll();setPage('history');toast(id?'変更を保存しました':'実戦を記録しました')});
+$('cancelEdit').addEventListener('click',()=>{resetForm();setPage('history')});
+$('historySearch').addEventListener('input',renderHistory);$('historyMonth').addEventListener('change',renderHistory);
+$('saveSettings').addEventListener('click',()=>{settings.budget=Math.max(0,Number($('budget').value)||0);settings.goal=Number($('goal').value)||0;localStorage.setItem(SETTINGS,JSON.stringify(settings));toast('設定を保存しました')});
+$('exportData').addEventListener('click',exportJSON);$('backupTop').addEventListener('click',exportJSON);$('exportCsv').addEventListener('click',exportCSV);
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!data||!Array.isArray(data.records))throw Error('形式');if(!confirm('現在の記録をバックアップの内容で置き換える？先に現在のデータをバックアップしてね。'))return;records=data.records.filter(r=>r&&typeof r==='object'&&r.id).map(r=>({...r,invest:Math.max(0,Number(r.invest)||0),returned:Math.max(0,Number(r.returned)||0)}));if(data.settings&&typeof data.settings==='object')settings={budget:Number(data.settings.budget)||0,goal:Number(data.settings.goal)||0};persist();localStorage.setItem(SETTINGS,JSON.stringify(settings));renderAll();toast('バックアップを復元しました')}catch{alert('このファイルはPachiLogのバックアップとして読み込めませんでした。')}finally{e.target.value=''}});
+$('clearData').addEventListener('click',()=>{if(!confirm('すべての実戦記録を削除します。必ず先にバックアップを取ってください。'))return;if(!confirm('本当に全部削除する？この操作は取り消せません。'))return;records=[];persist();renderAll();toast('すべての記録を削除しました')});
+let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(currentPage==='home')drawChart($('homeChart'),dailySeries(monthKey(dateNow())));if(currentPage==='analysis')drawChart($('analysisChart'),monthlySeries())},100)});
+load();resetForm();renderAll();
+})();
+</script>
+</body>
+</html>
